@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-thick {
+    @apply w-80 h-20 md:w-85 md:h-20 pl-6 font-bold bg-main-color-1 text-2xl uppercase rounded-2xl cursor-pointer border-2 border-black hover:border-violet-800 transition-all ease-linear flex justify-start items-center shadow-thick hover:shadow-thick-2;
+  }
+}
+
+* {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 400;
+}
+
+body {
+  background-color: #7945ff;
+}
