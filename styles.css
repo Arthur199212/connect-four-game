@@ -1,0 +1,18 @@
+.board {
+  display: flex;
+}
+
+.circle {
+  width: 3rem;
+  height: 3rem;
+  background-color: #623dac;
+  border-radius: 50%;
+}
+
+.fill_1 {
+  background-color: #ec9c24;
+}
+
+.fill_2 {
+  background-color: #ec3f24;
+}
