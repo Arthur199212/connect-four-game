@@ -11,9 +11,6 @@ module.exports = {
         thick: "0px 8px 0px 0px #000000",
         "thick-2": "0px 8px 0px 0px #5c2dd5",
       },
-      width: {
-        "85": "22rem"
-      }
     },
   },
   variants: {},

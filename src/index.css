@@ -4,7 +4,11 @@
 
 @layer components {
   .btn-thick {
-    @apply w-80 h-20 md:w-85 md:h-20 pl-6 font-bold bg-main-color-1 text-2xl uppercase rounded-2xl cursor-pointer border-2 border-black hover:border-violet-800 transition-all ease-linear flex justify-start items-center shadow-thick hover:shadow-thick-2;
+    @apply w-80 h-20 md:w-[22rem] md:h-20 pl-6 font-bold bg-main-color-1 text-2xl uppercase rounded-2xl flex justify-start items-center btn-border;
+  }
+
+  .btn-border {
+    @apply cursor-pointer border-2 border-black hover:border-violet-800 transition-all ease-linear shadow-thick hover:shadow-thick-2;
   }
 }
 

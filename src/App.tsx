@@ -1,5 +1,5 @@
-import { Home } from "./components"
+import { Home, Rules } from "./components"
 
 export function App() {
-  return <Home />
+  return <Rules />
 }
