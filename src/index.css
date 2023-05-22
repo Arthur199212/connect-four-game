@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-thick {
-    @apply w-80 h-20 md:w-[22rem] md:h-20 pl-6 font-bold bg-main-color-1 text-2xl uppercase rounded-2xl flex justify-start items-center btn-border;
+    @apply w-80 h-20 md:w-[22rem] md:h-20 pl-6 font-bold bg-main-color-1 text-2xl uppercase rounded-2xl flex justify-start items-center btn-border select-none;
   }
 
   .btn-border {

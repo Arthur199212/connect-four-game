@@ -1,4 +1,5 @@
 import { TiTick } from "react-icons/ti"
+import { Link } from "react-router-dom"
 
 export function Rules() {
   return (
@@ -26,9 +27,11 @@ export function Rules() {
         <p className="my-4">
           4. The starter of the previous game goes second on the next game.
         </p>
-        <div className="w-16 h-16 flex justify-center items-center rounded-full border-thick bg-main-color-1 absolute top-full right-1/2 translate-y-[-50%] translate-x-[50%] shadow-thick border-2 border-black btn-border">
-          <TiTick className="w-8 h-8 text-white" />
-        </div>
+        <Link to={"/"}>
+          <div className="w-16 h-16 flex justify-center items-center rounded-full border-thick bg-main-color-1 absolute top-full right-1/2 translate-y-[-50%] translate-x-[50%] shadow-thick border-2 border-black btn-border">
+            <TiTick className="w-8 h-8 text-white" />
+          </div>
+        </Link>
       </div>
     </div>
   )

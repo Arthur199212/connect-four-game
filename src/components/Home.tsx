@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import LogoImg from "../assets/logo.svg"
 import PlayerVsCpuImg from "../assets/player-vs-cpu.svg"
 import PlayerVsPlayerImg from "../assets/player-vs-player.svg"
@@ -15,7 +16,9 @@ export function Home() {
           Play vs Player
           <PlayerVsPlayerImg className="absolute right-5" />
         </div>
-        <div className="btn-thick mt-8 bg-white">Game rules</div>
+        <Link to="/rules">
+          <div className="btn-thick mt-8 bg-white">Game rules</div>
+        </Link>
       </div>
     </div>
   )
