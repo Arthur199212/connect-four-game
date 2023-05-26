@@ -7,22 +7,28 @@ export function useCountDown(seconds = DEFAULT_TIME_SEC): {
   timeLeft: number
   restart: () => void
   stop: () => void
+  resume: () => void
 } {
   const [timeLeft, setTimeLeft] = useState(seconds)
   const timerRef = useRef<number | undefined>()
 
-  const restart = () => {
+  function restart() {
     stop()
     setTimeLeft(seconds)
     timerRef.current = setTimeout(tickerFunc, ONE_SECOND)
   }
 
-  const stop = () => {
+  function resume() {
+    if (timerRef.current) return
+    timerRef.current = setTimeout(tickerFunc, ONE_SECOND)
+  }
+
+  function stop() {
     clearInterval(timerRef.current)
     timerRef.current = undefined
   }
 
-  const tickerFunc = () => {
+  function tickerFunc() {
     setTimeLeft((time) => {
       const newTime = time - 1
       if (newTime >= 0) {
@@ -40,5 +46,5 @@ export function useCountDown(seconds = DEFAULT_TIME_SEC): {
     return () => clearInterval(timerRef.current)
   }, [])
 
-  return { timeLeft, restart, stop }
+  return { timeLeft, restart, stop, resume }
 }

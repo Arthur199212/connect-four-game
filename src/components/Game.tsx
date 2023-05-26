@@ -20,7 +20,7 @@ export function Game() {
   const [isGameDone, setIsGameDone] = useState(false)
   const [matrix, setMatrix] = useState(getMatrix())
   const [score, setScore] = useState<GameScore>(INITIAL_SCORE)
-  const { timeLeft, restart, stop } = useCountDown(TIME_ON_MOVE_SECONDS)
+  const { timeLeft, restart, resume, stop } = useCountDown(TIME_ON_MOVE_SECONDS)
 
   if (!isGameDone && timeLeft < 0) {
     stop()
@@ -65,7 +65,11 @@ export function Game() {
 
   return (
     <div className="flex w-full h-full flex-col min-h-screen">
-      <Header handleRestart={handleRestart} />
+      <Header
+        handleRestart={handleRestart}
+        onMenuOpen={stop}
+        onMenuClose={resume}
+      />
       <Score score={score} />
       <div className="relative w-full mt-10 mx-auto flex justify-center items-start">
         <BoardBlackImg className="absolute top-2" />

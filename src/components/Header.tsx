@@ -24,7 +24,6 @@ export function Header({
       return
     }
     modalRef.current.close()
-    onMenuClose && onMenuClose()
   }
 
   return (
@@ -47,6 +46,7 @@ export function Header({
       <dialog
         ref={modalRef}
         className="px-8 py-12 rounded-[2rem] max-w-[22.5rem] shadow-thick border-[3px] border-black bg-[#7945ff] backdrop:bg-black/50"
+        onClose={onMenuClose}
       >
         <div className="text-6xl font-bold text-white text-center">PAUSE</div>
         <button
