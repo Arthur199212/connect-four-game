@@ -20,5 +20,10 @@
 }
 
 body {
+  min-height: 100vh;
   background-color: #7945ff;
+}
+
+#app {
+  min-height: 100vh;
 }
