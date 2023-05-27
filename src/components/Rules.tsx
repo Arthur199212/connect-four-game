@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 
 export function Rules() {
   return (
-    <div className="h-full w-full flex justify-center items-center">
-      <div className="w-[32rem] h-auto m-20 py-12 px-5 bg-white border-2 border-black shadow-thick rounded-2xl relative">
+    <div className="h-full w-full flex justify-center items-center min-h-screen">
+      <div className="w-[32rem] h-auto mx-2 mt-2 mb-12 py-12 px-5 bg-white border-2 border-black shadow-thick rounded-2xl relative">
         <h1 className="uppercase text-4xl text-center font-bold">Rules</h1>
         <h2 className="uppercase mt-9 text-xl font-bold text-primary-bg-color">
           Objective
