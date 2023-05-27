@@ -4,19 +4,11 @@ import { Move } from "../game-service"
 const MARKER_WIDTH = 38
 const MARKER_HEIGHT = 35.773
 
-export function MoveMarker({
-  cols,
-  player,
-  move,
-}: {
-  cols: number
-  player: number
-  move: Move
-}) {
+export function MoveMarker({ cols, move }: { cols: number; move: Move }) {
   const markerRef = useRef<SVGSVGElement>(null)
 
   const display = !move.done ? "none" : "block"
-  const color = player === 1 ? "#ffce67" : "#fd6687"
+  const color = move.player === 1 ? "#fd6687" : "#ffce67"
   const xPos = getMarkerXPosition(cols, move, MARKER_WIDTH, markerRef.current)
 
   return (

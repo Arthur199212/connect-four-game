@@ -17,7 +17,7 @@ import {
   getNextPlayer,
   useCountDown,
   GameScore,
-  NO_MOVE,
+  NOT_DONE_MOVE,
 } from "../game-service"
 
 const INITIAL_SCORE: GameScore = [0, 0]
@@ -32,9 +32,8 @@ export function Game() {
   const [matrix, setMatrix] = useState(getMatrix(ROWS, COLS))
   const [score, setScore] = useState<GameScore>(INITIAL_SCORE)
   const timer = useCountDown(TIME_ON_MOVE_SECONDS)
-  const [prevMove, setPrevMove] = useState(NO_MOVE)
+  const [prevMove, setPrevMove] = useState(NOT_DONE_MOVE)
   const [winner, setWinner] = useState(0)
-  const [moveCount, setMoveCount] = useState(1)
 
   if (!isGameDone && timer.timeLeft < 0) {
     timer.stop()
@@ -53,12 +52,11 @@ export function Game() {
   }
 
   function handleMove(col: number) {
-    const move = makeMove(matrix, col, player)
+    const move = makeMove(matrix, col, player, prevMove)
     if (!move.done) {
       return
     }
     setPrevMove(move)
-    setMoveCount((count) => count + 1)
 
     if (isWinMove(matrix, move.row, move.col, player)) {
       setWinner(player)
@@ -67,7 +65,7 @@ export function Game() {
       updateWinnersScore(player)
       return
     }
-    if (moveCount >= allNodesCount) {
+    if (move.count >= allNodesCount) {
       setIsGameDone(true)
       timer.stop()
       return
@@ -80,8 +78,7 @@ export function Game() {
     setIsGameDone(false)
     setMatrix(getMatrix())
     setPlayer(getNextPlayer)
-    setPrevMove(NO_MOVE)
-    setMoveCount(1)
+    setPrevMove(NOT_DONE_MOVE)
     timer.restart()
   }
 
@@ -99,10 +96,12 @@ export function Game() {
         <div className="relative flex justify-center items-start">
           <BoardBlackImg className="absolute top-2" />
           <BoardWhiteImg className="z-10" />
-          <MoveMarker player={player} move={prevMove} cols={COLS} />
+          <MoveMarker move={prevMove} cols={COLS} />
           {!isGameDone && <Controller matrix={matrix} onClick={handleMove} />}
           <Board matrix={matrix} />
-          {!isGameDone && <TurnBanner player={player} timeLeft={timer.timeLeft} />}
+          {!isGameDone && (
+            <TurnBanner player={player} timeLeft={timer.timeLeft} />
+          )}
           {isGameDone && (
             <WinBanner player={winner} handleRestart={handleRestart} />
           )}
