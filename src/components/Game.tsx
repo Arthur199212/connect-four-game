@@ -1,8 +1,15 @@
 import { useState } from "react"
 import BoardWhiteImg from "../assets/board-layer-white-small.svg"
 import BoardBlackImg from "../assets/board-layer-black-small.svg"
-import MarkerRedImg from "../assets/marker-red.svg"
-import { Board, Controller, Header, Score, TurnBanner, WinBanner } from "."
+import {
+  Board,
+  Controller,
+  Header,
+  MoveMarker,
+  Score,
+  TurnBanner,
+  WinBanner,
+} from "."
 import {
   getMatrix,
   isWinMove,
@@ -10,17 +17,21 @@ import {
   getNextPlayer,
   useCountDown,
   GameScore,
+  NO_MOVE,
 } from "../game-service"
 
 const INITIAL_SCORE: GameScore = [0, 0]
 const TIME_ON_MOVE_SECONDS = 35
+const ROWS = 6
+const COLS = 7
 
 export function Game() {
   const [player, setPlayer] = useState(1)
   const [isGameDone, setIsGameDone] = useState(false)
-  const [matrix, setMatrix] = useState(getMatrix())
+  const [matrix, setMatrix] = useState(getMatrix(ROWS, COLS))
   const [score, setScore] = useState<GameScore>(INITIAL_SCORE)
   const { timeLeft, restart, resume, stop } = useCountDown(TIME_ON_MOVE_SECONDS)
+  const [move, setMove] = useState(NO_MOVE)
 
   if (!isGameDone && timeLeft < 0) {
     stop()
@@ -43,6 +54,7 @@ export function Game() {
     if (!move.done) {
       return
     }
+    setMove(move)
     if (isWinMove(matrix, move.row, move.col, player)) {
       setIsGameDone(true)
       stop()
@@ -58,6 +70,7 @@ export function Game() {
     setIsGameDone(false)
     setMatrix(getMatrix())
     setPlayer(getNextPlayer)
+    setMove(NO_MOVE)
     restart()
   }
 
@@ -71,16 +84,18 @@ export function Game() {
         onMenuClose={resume}
       />
       <Score score={score} />
-      <div className="relative w-full mt-10 mx-auto flex justify-center items-start">
-        <BoardBlackImg className="absolute top-2" />
-        <BoardWhiteImg className="z-10" />
-        <MarkerRedImg className="absolute z-10 top-[-33px]" />
-        {!isGameDone && <Controller matrix={matrix} onClick={handleMove} />}
-        <Board matrix={matrix} />
-        {!isGameDone && <TurnBanner player={player} timeLeft={timeLeft} />}
-        {isGameDone && (
-          <WinBanner player={player} handleRestart={handleRestart} />
-        )}
+      <div className="w-full mt-12 mx-auto flex justify-center items-start">
+        <div className="relative flex justify-center items-start">
+          <BoardBlackImg className="absolute top-2" />
+          <BoardWhiteImg className="z-10" />
+          <MoveMarker player={player} move={move} cols={COLS} />
+          {!isGameDone && <Controller matrix={matrix} onClick={handleMove} />}
+          <Board matrix={matrix} />
+          {!isGameDone && <TurnBanner player={player} timeLeft={timeLeft} />}
+          {isGameDone && (
+            <WinBanner player={player} handleRestart={handleRestart} />
+          )}
+        </div>
       </div>
       <div
         className={`${footerColor} min-h-[11rem] max-w-lg mx-auto rounded-t-[3rem] w-full flex-1`}

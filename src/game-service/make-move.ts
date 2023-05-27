@@ -1,11 +1,19 @@
+export type Move = {
+  done: boolean
+  row: number
+  col: number
+}
+
+export const NO_MOVE: Move = { done: false, row: 0, col: 0 }
+
 export function makeMove(
   matrix: { player: number }[][],
   col: number,
   player: number
-): { done: boolean; row: number; col: number } {
+): Move {
   // handle out of bound
   if (col < 0 || col >= matrix[0].length) {
-    return { done: false, row: 0, col: 0 }
+    return NO_MOVE
   }
 
   let row = matrix.length - 1
@@ -15,7 +23,7 @@ export function makeMove(
   }
   // column is already full
   if (row < 0) {
-    return { done: false, row: 0, col: 0 }
+    return NO_MOVE
   }
 
   const circle = matrix[row][col]
@@ -24,5 +32,5 @@ export function makeMove(
     return { done: true, row, col }
   }
 
-  return { done: false, row: 0, col: 0 }
+  return NO_MOVE
 }

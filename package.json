@@ -6,7 +6,7 @@
   "license": "none",
   "keywords": [],
   "scripts": {
-    "start": "parcel ./src/index.html",
+    "start": "rm .parcel-cache/ -r && parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
     "lint": "npx eslint --ext .js,.jsx,.tsx,.ts ./",
     "lint:fix": "npx eslint --ext .js,.jsx,.tsx,.ts ./ --fix",

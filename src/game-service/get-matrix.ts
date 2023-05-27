@@ -4,6 +4,7 @@ export type Matrix = MatrixNode[][]
 
 export type MatrixNode = {
   player: 0 | 1 | 2
+  win?: boolean
 }
 
 export function getMatrix(rows = 6, cols = 7): Matrix {

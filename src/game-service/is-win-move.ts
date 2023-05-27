@@ -26,12 +26,25 @@ export function isWinMove(
   col: number,
   player: number
 ) {
+  let winCombinationFound = false
+  const curNode = [row, col]
+  let path: number[][] = [curNode]
+
   for (const directions of allDirections) {
-    const a = traverse(matrix, row, col, directions[0], player)
-    const b = traverse(matrix, row, col, directions[1], player)
-    if (a + b + 1 >= winCount) return true
+    traverse(matrix, row, col, directions[0], player, path)
+    traverse(matrix, row, col, directions[1], player, path)
+    if (path.length >= winCount) {
+      winCombinationFound = true
+      break
+    }
+    path = [curNode]
   }
-  return false
+  if (!winCombinationFound) return false
+
+  for (const [row, col] of path) {
+    matrix[row][col].win = true
+  }
+  return true
 }
 
 function traverse(
@@ -39,7 +52,8 @@ function traverse(
   row: number,
   col: number,
   directions: number[],
-  player: number
+  player: number,
+  path?: number[][]
 ) {
   let i = 1
   while (i <= winCount) {
@@ -52,8 +66,10 @@ function traverse(
       newCol < 0 ||
       newCol >= matrix[0].length ||
       matrix[newRow][newCol].player !== player
-    )
+    ) {
       break
+    }
+    path && path.push([newRow, newCol])
     i++
   }
   return i - 1
