@@ -31,13 +31,13 @@ export function Game() {
   const [isGameDone, setIsGameDone] = useState(false)
   const [matrix, setMatrix] = useState(getMatrix(ROWS, COLS))
   const [score, setScore] = useState<GameScore>(INITIAL_SCORE)
-  const { timeLeft, restart, resume, stop } = useCountDown(TIME_ON_MOVE_SECONDS)
+  const timer = useCountDown(TIME_ON_MOVE_SECONDS)
   const [prevMove, setPrevMove] = useState(NO_MOVE)
   const [winner, setWinner] = useState(0)
   const [moveCount, setMoveCount] = useState(1)
 
-  if (!isGameDone && timeLeft < 0) {
-    stop()
+  if (!isGameDone && timer.timeLeft < 0) {
+    timer.stop()
     const nextPlayer = getNextPlayer(player)
     setPlayer(nextPlayer)
     updateWinnersScore(nextPlayer)
@@ -63,15 +63,16 @@ export function Game() {
     if (isWinMove(matrix, move.row, move.col, player)) {
       setWinner(player)
       setIsGameDone(true)
-      stop()
+      timer.stop()
       updateWinnersScore(player)
       return
     }
     if (moveCount >= allNodesCount) {
       setIsGameDone(true)
-      stop()
+      timer.stop()
+      return
     }
-    restart()
+    timer.restart()
     setPlayer(getNextPlayer)
   }
 
@@ -81,7 +82,7 @@ export function Game() {
     setPlayer(getNextPlayer)
     setPrevMove(NO_MOVE)
     setMoveCount(1)
-    restart()
+    timer.restart()
   }
 
   const footerColor = isGameDone ? `bg-main-color-${player}` : "bg-[#5c2dd5]"
@@ -90,8 +91,8 @@ export function Game() {
     <div className="flex w-full h-full flex-col min-h-screen">
       <Header
         handleRestart={handleRestart}
-        onMenuOpen={stop}
-        onMenuClose={resume}
+        onMenuOpen={timer.stop}
+        onMenuClose={timer.resume}
       />
       <Score score={score} />
       <div className="w-full mt-12 mx-auto flex justify-center items-start">
@@ -101,7 +102,7 @@ export function Game() {
           <MoveMarker player={player} move={prevMove} cols={COLS} />
           {!isGameDone && <Controller matrix={matrix} onClick={handleMove} />}
           <Board matrix={matrix} />
-          {!isGameDone && <TurnBanner player={player} timeLeft={timeLeft} />}
+          {!isGameDone && <TurnBanner player={player} timeLeft={timer.timeLeft} />}
           {isGameDone && (
             <WinBanner player={winner} handleRestart={handleRestart} />
           )}
