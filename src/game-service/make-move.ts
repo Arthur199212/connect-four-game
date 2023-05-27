@@ -1,3 +1,5 @@
+import { Matrix, MatrixNode } from "./get-matrix"
+
 export type Move = {
   done: boolean
   row: number
@@ -6,11 +8,7 @@ export type Move = {
 
 export const NO_MOVE: Move = { done: false, row: 0, col: 0 }
 
-export function makeMove(
-  matrix: { player: number }[][],
-  col: number,
-  player: number
-): Move {
+export function makeMove(matrix: Matrix, col: number, player: number): Move {
   // handle out of bound
   if (col < 0 || col >= matrix[0].length) {
     return NO_MOVE
@@ -26,9 +24,9 @@ export function makeMove(
     return NO_MOVE
   }
 
-  const circle = matrix[row][col]
-  if (circle) {
-    circle.player = player
+  const node = matrix[row][col]
+  if (node) {
+    node.player = player as MatrixNode["player"]
     return { done: true, row, col }
   }
 
