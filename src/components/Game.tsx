@@ -39,6 +39,7 @@ export function Game() {
     timer.stop()
     const nextPlayer = getNextPlayer(player)
     setPlayer(nextPlayer)
+    setWinner(nextPlayer)
     updateWinnersScore(nextPlayer)
     setIsGameDone(true)
   }
