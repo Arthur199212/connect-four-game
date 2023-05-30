@@ -4,16 +4,18 @@ import { OFFSET, WINDOW_SIZE } from "./constants"
 const CENTER_COST = 4
 const TWO_IN_LINE_COST = 2
 const TREE_IN_LINE_COST = 5
-const WIN_COST = 1_000
+const WIN_COST = 100
+const OPPONENT_TWO_IN_LINE_COST = 1
+const OPPONENT_TREE_IN_LINE_COST = 50
+
 const notTaken = 0
 
-// todo: evaluate oponent markers
-export function evaluateWindow(
+export async function evaluateWindow(
   matrix: Matrix,
   col: number,
   player: number,
   window: number[][] // [y, x]
-) {
+): Promise<number> {
   let score = 0
   if (window.length < WINDOW_SIZE) {
     return score
@@ -56,6 +58,22 @@ export function evaluateWindow(
         count[notTaken] === 2
       ) {
         score += TREE_IN_LINE_COST
+      }
+      // take into account opponent
+      if (
+        count[player] === 0 &&
+        count[opponent] === 2 &&
+        count[notTaken] === 2
+      ) {
+        score += OPPONENT_TWO_IN_LINE_COST
+      }
+
+      if (
+        count[player] === 0 &&
+        count[opponent] === 3 &&
+        count[notTaken] === 1
+      ) {
+        score += OPPONENT_TREE_IN_LINE_COST
       }
 
       // move slow point furser

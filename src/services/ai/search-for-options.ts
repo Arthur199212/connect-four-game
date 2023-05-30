@@ -1,6 +1,6 @@
 import { Matrix } from "../game"
 
-export function searchForOptions(matrix: Matrix) {
+export async function searchForOptions(matrix: Matrix): Promise<number[][]> {
   const options: number[][] = []
 
   for (let col = 0; col < matrix[0].length; col++) {

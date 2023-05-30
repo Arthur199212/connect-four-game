@@ -1,8 +1,16 @@
 import { Matrix } from "../game"
 import { OFFSET } from "./constants"
 
-export function formWindows(matrix: Matrix, options: number[][]) {
-  const res = []
+export type OptionWithWindow = {
+  col: number
+  window: number[][]
+}
+
+export async function formWindows(
+  matrix: Matrix,
+  options: number[][]
+): Promise<OptionWithWindow[]> {
+  const res: OptionWithWindow[] = []
 
   for (const [row, col] of options) {
     // x
@@ -17,7 +25,7 @@ export function formWindows(matrix: Matrix, options: number[][]) {
       window.push([row, l])
       l++
     }
-    window.length > 3 && res.push(window)
+    window.length > 3 && res.push({ col, window })
     window = []
 
     // y -> only down for optimization
@@ -31,7 +39,7 @@ export function formWindows(matrix: Matrix, options: number[][]) {
       window.push([l, col])
       l++
     }
-    window.length > 3 && res.push(window)
+    window.length > 3 && res.push({ col, window })
     window = []
 
     // lowering diagonal
@@ -49,7 +57,7 @@ export function formWindows(matrix: Matrix, options: number[][]) {
       lR++
       lC++
     }
-    window.length > 3 && res.push(window)
+    window.length > 3 && res.push({ col, window })
     window = []
 
     // rising diagonal
@@ -67,7 +75,7 @@ export function formWindows(matrix: Matrix, options: number[][]) {
       lR--
       lC++
     }
-    window.length > 3 && res.push(window)
+    window.length > 3 && res.push({ col, window })
   }
 
   return res
