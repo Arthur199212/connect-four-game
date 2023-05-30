@@ -10,7 +10,7 @@
     "build": "parcel build ./src/index.html",
     "lint": "npx eslint --ext .js,.jsx,.tsx,.ts ./",
     "lint:fix": "npx eslint --ext .js,.jsx,.tsx,.ts ./ --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@parcel/transformer-svg-react": "^2.8.3",
+    "@types/jest": "^29.5.1",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
@@ -28,10 +29,14 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.41.0",
     "eslint-plugin-react": "^7.32.2",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "parcel": "^2.8.3",
     "postcss": "^8.4.23",
     "process": "^0.11.10",
     "tailwindcss": "^3.3.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
 }

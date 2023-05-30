@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { Move } from "../game-service"
+import { Move } from "../services/game"
 
 const MARKER_WIDTH = 38
 const MARKER_HEIGHT = 35.773

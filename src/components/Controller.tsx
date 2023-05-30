@@ -1,4 +1,4 @@
-import { Matrix } from "../game-service/game.service"
+import { Matrix } from "../services/game"
 
 export function Controller({
   matrix,

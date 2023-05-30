@@ -18,7 +18,7 @@ import {
   useCountDown,
   GameScore,
   NOT_DONE_MOVE,
-} from "../game-service"
+} from "../services/game"
 
 const INITIAL_SCORE: GameScore = [0, 0]
 const TIME_ON_MOVE_SECONDS = 30

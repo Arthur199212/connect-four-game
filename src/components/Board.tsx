@@ -1,4 +1,4 @@
-import { Matrix, MatrixNode } from "../game-service"
+import { Matrix, MatrixNode } from "../services/game"
 
 export function Board({ matrix }: { matrix: Matrix }) {
   return (

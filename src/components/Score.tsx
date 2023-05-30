@@ -1,6 +1,6 @@
 import YouImg from "../assets/you.svg"
 import CpuImg from "../assets/cpu.svg"
-import { GameScore } from "../game-service"
+import { GameScore } from "../services/game"
 
 export function Score({ score }: { score: GameScore }) {
   return (
