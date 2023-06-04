@@ -1,9 +1,11 @@
 import { Matrix } from "../services/game"
 
 export function Controller({
+  disabled,
   matrix,
   onClick,
 }: {
+  disabled: boolean
   matrix: Matrix
   onClick: (col: number) => void
 }) {
@@ -14,7 +16,10 @@ export function Controller({
           <div
             key={`ctrl_col_${i}`}
             className="w-[47px] h-full bg-transparent rounded-2xl cursor-pointer select-none"
-            onClick={() => onClick(i)}
+            onClick={() => {
+              if (disabled) return
+              onClick(i)
+            }}
           ></div>
         ))}
     </div>

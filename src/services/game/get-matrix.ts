@@ -7,7 +7,10 @@ export type MatrixNode = {
   win?: boolean
 }
 
-export function getMatrix(rows = 6, cols = 7): Matrix {
+export const ROWS = 6
+export const COLS = 7
+
+export function getMatrix(rows = ROWS, cols = COLS): Matrix {
   const matrix = new Array(rows).fill(0).map(() => new Array(cols).fill(0))
   for (let row = 0; row < matrix.length; row++) {
     for (let col = 0; col < matrix[0].length; col++) {

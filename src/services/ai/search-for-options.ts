@@ -1,16 +1,22 @@
-import { Matrix } from "../game"
-
-export async function searchForOptions(matrix: Matrix): Promise<number[][]> {
+export function searchForOptions(matrix: number[][]): number[][] {
   const options: number[][] = []
 
   for (let col = 0; col < matrix[0].length; col++) {
-    for (let row = 0; row < matrix.length; row++) {
-      if (matrix[row][col].player === 0) {
+    for (let row = matrix.length - 1; row >= 0; row--) {
+      if (matrix[row][col] === 0) {
         options.push([row, col])
         break
       }
     }
   }
 
-  return options
+  return randomizeOptions(options)
+}
+
+function randomizeOptions(opts: number[][]): number[][] {
+  for (let i = 0; i < opts.length; i++) {
+    const j: number = Math.floor(Math.random() * opts.length)
+    ;[opts[i], opts[j]] = [opts[j], opts[i]]
+  }
+  return opts
 }

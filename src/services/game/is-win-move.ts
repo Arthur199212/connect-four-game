@@ -20,7 +20,7 @@ const allDirections = [
   ],
 ]
 
-export function isWinMove(
+export function getWinPath(
   matrix: Matrix,
   row: number,
   col: number,
@@ -38,13 +38,9 @@ export function isWinMove(
     }
     path = []
   }
-  if (!winCombinationFound) return false
+  if (!winCombinationFound) return []
 
-  matrix[row][col].win = true
-  for (const [row, col] of path) {
-    matrix[row][col].win = true
-  }
-  return true
+  return path
 }
 
 function traverse(

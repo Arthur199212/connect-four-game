@@ -10,7 +10,7 @@ export function useCountDown(seconds = DEFAULT_TIME_SEC): {
   resume: () => void
 } {
   const [timeLeft, setTimeLeft] = useState(seconds)
-  const timerRef = useRef<number | undefined>()
+  const timerRef = useRef<NodeJS.Timeout | undefined>()
 
   function restart() {
     stop()
