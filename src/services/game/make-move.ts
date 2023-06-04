@@ -12,8 +12,8 @@ export const NOT_DONE_MOVE: Move = {
   done: false,
   row: 0,
   col: 0,
-  player: 1,
-  count: 1,
+  player: 0,
+  count: 0,
 }
 
 export function makeMove(

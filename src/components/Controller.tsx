@@ -1,11 +1,11 @@
 import { Matrix } from "../services/game"
 
 export function Controller({
-  disabled,
+  disabled = false,
   matrix,
   onClick,
 }: {
-  disabled: boolean
+  disabled?: boolean
   matrix: Matrix
   onClick: (col: number) => void
 }) {

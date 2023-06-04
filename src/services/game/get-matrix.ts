@@ -1,3 +1,5 @@
+import { COLS, ROWS } from "./constants"
+
 export type GameScore = [number, number]
 
 export type Matrix = MatrixNode[][]
@@ -6,9 +8,6 @@ export type MatrixNode = {
   player: 0 | 1 | 2
   win?: boolean
 }
-
-export const ROWS = 6
-export const COLS = 7
 
 export function getMatrix(rows = ROWS, cols = COLS): Matrix {
   const matrix = new Array(rows).fill(0).map(() => new Array(cols).fill(0))

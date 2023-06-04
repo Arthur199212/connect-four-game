@@ -1,3 +1,5 @@
+export * from "./constants"
+export * from "./draw-win-combination"
 export * from "./get-matrix"
 export * from "./get-next-player"
 export * from "./is-win-move"
