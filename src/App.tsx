@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { HashRouter, Route, Routes } from "react-router-dom"
 import { Home, PlayVsAI, Rules, NotFound, PlayVsPlayer } from "./components"
 
 export function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
@@ -13,6 +13,6 @@ export function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
