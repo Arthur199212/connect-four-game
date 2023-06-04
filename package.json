@@ -1,13 +1,12 @@
 {
   "name": "connect-four-game",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Connect Four Game",
   "author": "Arthur Rubchenko",
-  "license": "none",
-  "keywords": [],
   "scripts": {
     "start": "rm .parcel-cache/ -rf && parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
+    "deploy": "npx gh-pages -d dist",
     "lint": "npx eslint --ext .js,.jsx,.tsx,.ts ./",
     "lint:fix": "npx eslint --ext .js,.jsx,.tsx,.ts ./ --fix",
     "check-types": "tsc --noEmit --skipLibCheck",
@@ -39,5 +38,15 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
-  }
+  },
+  "license": "MIT",
+  "keywords": [
+    "connect four",
+    "connect 4",
+    "game",
+    "negamax",
+    "minimax",
+    "react",
+    "typescript"
+  ]
 }
