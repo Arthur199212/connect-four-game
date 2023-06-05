@@ -1,16 +1,16 @@
 import { COLS, ROWS } from "../game"
-import { negamax } from "./negamax"
+import { minimax } from "./minimax"
 import { curPlayer } from "./utils"
 
 type Result = { score: number; move: number }
 
-const DEPTH = 5
+const DEPTH = 10
 
 export function getNextMove(pos: string, depth?: number): Result {
   const m = getMatrix()
   fillMatrix(pos, m)
   if (depth === undefined) depth = DEPTH
-  return negamax(m, pos.length, DEPTH)
+  return minimax(m, pos.length, depth, -Infinity, +Infinity)
 }
 
 function getMatrix(): number[][] {

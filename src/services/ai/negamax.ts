@@ -1,9 +1,8 @@
+import { WIN_COST } from "./constants"
 import { evaluatePosition } from "./evaluate-postion"
 import { isWinMove } from "./is-win-move"
 import { searchForOptions } from "./search-for-options"
 import { curPlayer } from "./utils"
-
-const WIN_COST = 100
 
 export function negamax(
   m: number[][],
