@@ -33998,14 +33998,14 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getNextMove", ()=>getNextMove);
 var _game = require("../game");
-var _negamax = require("./negamax");
+var _minimax = require("./minimax");
 var _utils = require("./utils");
-const DEPTH = 5;
+const DEPTH = 10;
 function getNextMove(pos, depth) {
     const m = getMatrix();
     fillMatrix(pos, m);
     if (depth === undefined) depth = DEPTH;
-    return (0, _negamax.negamax)(m, pos.length, DEPTH);
+    return (0, _minimax.minimax)(m, pos.length, depth, -Infinity, Infinity);
 }
 function getMatrix() {
     const m = new Array((0, _game.ROWS)).fill(0);
@@ -34022,7 +34022,7 @@ function fillMatrix(pos, m) {
     }
 }
 
-},{"../game":"9UtPB","./negamax":"ezQ77","./utils":"104q2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9UtPB":[function(require,module,exports) {
+},{"../game":"9UtPB","./minimax":"72TR2","./utils":"104q2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9UtPB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _constants = require("./constants");
@@ -34262,16 +34262,16 @@ function useCountDown(seconds = DEFAULT_TIME_SEC) {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"ezQ77":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"72TR2":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "negamax", ()=>negamax);
+parcelHelpers.export(exports, "minimax", ()=>minimax);
+var _constants = require("./constants");
 var _evaluatePostion = require("./evaluate-postion");
 var _isWinMove = require("./is-win-move");
 var _searchForOptions = require("./search-for-options");
 var _utils = require("./utils");
-const WIN_COST = 100;
-function negamax(m, turn, depth) {
+function minimax(m, turn, depth, alpha, beta) {
     const opts = (0, _searchForOptions.searchForOptions)(m);
     // stalemate
     if (opts.length === 0) return {
@@ -34283,10 +34283,13 @@ function negamax(m, turn, depth) {
         m[row][col] = (0, _utils.curPlayer)(turn);
         const winMove = (0, _isWinMove.isWinMove)(m, row, col);
         m[row][col] = 0;
-        if (winMove) return {
-            move: col,
-            score: WIN_COST
-        };
+        if (winMove) {
+            const sign = turn % 2 !== 0 ? 1 : -1;
+            return {
+                move: col,
+                score: (0, _constants.WIN_COST) * sign
+            };
+        }
     }
     const randOpt = opts[Math.floor(Math.random() * opts.length)][1];
     if (depth === 0) {
@@ -34296,25 +34299,50 @@ function negamax(m, turn, depth) {
             score
         };
     }
-    const best = {
-        move: randOpt,
-        score: -WIN_COST * 2
-    };
-    for (const [row, col] of opts){
-        m[row][col] = (0, _utils.curPlayer)(turn);
-        const res = negamax(m, turn + 1, depth - 1);
-        m[row][col] = 0;
-        res.score *= -1 // flip player
-        ;
-        if (res.score > best.score) {
-            best.score = res.score;
-            best.move = col;
+    if (turn % 2 !== 0) {
+        const best = {
+            move: randOpt,
+            score: -Infinity
+        };
+        for (const [row, col] of opts){
+            m[row][col] = (0, _utils.curPlayer)(turn);
+            const res = minimax(m, turn + 1, depth - 1, alpha, beta);
+            m[row][col] = 0;
+            if (res.score > best.score) {
+                best.score = res.score;
+                best.move = col;
+                alpha = Math.max(alpha, best.score);
+                if (beta <= alpha) break;
+            }
         }
+        return best;
+    } else {
+        const best = {
+            move: randOpt,
+            score: Infinity
+        };
+        for (const [row, col] of opts){
+            m[row][col] = (0, _utils.curPlayer)(turn);
+            const res = minimax(m, turn + 1, depth - 1, alpha, beta);
+            m[row][col] = 0;
+            if (res.score < best.score) {
+                best.score = res.score;
+                best.move = col;
+                beta = Math.min(beta, best.score);
+                if (beta <= alpha) break;
+            }
+        }
+        return best;
     }
-    return best;
 }
 
-},{"./evaluate-postion":"cmNrW","./is-win-move":"gJSWx","./search-for-options":"0HkP8","./utils":"104q2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cmNrW":[function(require,module,exports) {
+},{"./constants":"2mdqP","./evaluate-postion":"cmNrW","./search-for-options":"0HkP8","./utils":"104q2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./is-win-move":"gJSWx"}],"2mdqP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "WIN_COST", ()=>WIN_COST);
+const WIN_COST = 100;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cmNrW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "evaluatePosition", ()=>evaluatePosition);
